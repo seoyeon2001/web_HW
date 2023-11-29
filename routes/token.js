@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
   try {
     const id = "vappet";
     const nick = "hodoopapa";
-    // jwt.sign() 메소드: 토큰 발급
+
     const token = jwt.sign(
       {
         id,
@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
       },
       process.env.JWT_SECRET,
       {
-        expiresIn: "1m",
+        expiresIn: "10m",
         issuer: "토큰 발급자",
       }
     );
