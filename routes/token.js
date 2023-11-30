@@ -1,3 +1,7 @@
+// 이건 안쓰는거야 바보야
+
+
+
 const express = require("express");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -8,14 +12,10 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const id = "vappet";
-    const nick = "hodoopapa";
+    const id = req.body.id;
 
     const token = jwt.sign(
-      {
-        id,
-        nick,
-      },
+      { id, },
       process.env.JWT_SECRET,
       {
         expiresIn: "10m",

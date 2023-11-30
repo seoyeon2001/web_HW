@@ -10,7 +10,8 @@ router.get("/", function (req, res, next) {
 
 router.get("/checktoken", verifyToken, (req, res, next) => {
   console.log("checktoken 요청됨");
-  res.json({ code: 200, message: "토큰이 유효합니다." });
+  // res.json({ code: 200, message: "토큰이 유효합니다." });
+  res.json(req.decoded)
 });
 
 router.get("/hello", function (req, res, next) {
