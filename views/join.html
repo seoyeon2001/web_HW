@@ -55,11 +55,13 @@
             <tr>
                 <td><label for="password">비밀번호</label></td>
                 <td><input type="password" name="password" id="password" onchange="checkPw()" required disabled></td>
+                <td></td>
                 <td><span id="check1"></span></td>  
             </tr>
             <tr>
                 <td><label for="passwordcheck">비밀번호 확인</label></td>
                 <td><input type="password" name="passwordcheck" id="passwordcheck" onchange="checkPw()" required disabled></td>
+                <td></td>
                 <td><span id="check2"></span></td>    
             </tr>
         </table>
@@ -71,13 +73,25 @@
             resetIdCheck();
         });
 
-        // 중복 확인 결과와 입력 상태 초기화 함수
+        document.getElementById('password').addEventListener('input', function() {
+            resetpw();
+        });
+
+        // 입력 상태 초기화 함수
         function resetIdCheck() {
             document.getElementById('checkUseridresult').innerText = '';
             document.getElementById('checkUseridresult').style.color = '';
             document.getElementById('password').value = '';
             document.getElementById('passwordcheck').value = '';
             document.getElementById('password').disabled = true;
+            document.getElementById('passwordcheck').disabled = true;
+            document.getElementById('check1').innerText = '';
+            document.getElementById('check2').innerText = '';
+            document.getElementById('signupButton').disabled = true;
+        }
+
+        function resetpw() {
+            document.getElementById('passwordcheck').value = '';
             document.getElementById('passwordcheck').disabled = true;
             document.getElementById('check1').innerText = '';
             document.getElementById('check2').innerText = '';
@@ -98,7 +112,7 @@
                 body: JSON.stringify({ id }),
             })
             .then(response => { return response.json(); })
-            .then(data => { 
+            .then(data => {
                 const checkUseridresult = document.getElementById('checkUseridresult');
 
                 if (data.available) {
@@ -135,7 +149,7 @@
                 body: JSON.stringify({ id, password }),
             })
             .then(response => { return response.json(); })
-            .then(data => { 
+            .then(data => {
                 // 회원가입이 성공하면
                 if (data.success) {
                     alert('회원가입이 완료되었습니다.');
@@ -143,7 +157,6 @@
                 } else {
                     // 서버에서 에러 메시지를 받아서 사용자에게 표시할 수 있음
                     console.error('회원가입 실패:', data.message);
-                    // 사용자에게 실패 메시지를 표시하거나 다른 처리를 수행
                 }
             })
             .catch(error => {
@@ -177,8 +190,7 @@
                     check2.innerHTML='비밀번호가 일치합니다.'
                     check2.style.color='blue';
                     document.getElementById('signupButton').disabled = false;
-                }
-                else{
+                } else{
                     check2.innerHTML='비밀번호가 일치하지 않습니다.';
                     check2.style.color='red';
                     document.getElementById('signupButton').disabled = true;

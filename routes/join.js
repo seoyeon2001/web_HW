@@ -5,10 +5,12 @@ const crypto = require('crypto');
 var router = express.Router();
 router.use(express.json());
 
+/* 회원가입 화면 */
 router.get('/', (req, res) => {
   res.render('join');
 });
 
+/* 아이디 중복 체크 */
 router.post("/check-userid", async (req, res) => {
     try {
       const id = req.body.id; // 사용자가 입력한 id
@@ -27,7 +29,7 @@ router.post("/check-userid", async (req, res) => {
     }
   });
 
-
+/* 회원가입 */
 router.post("/signup", async (req, res) => {
 
     const user = { // 사용자가 입력한 id, password

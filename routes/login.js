@@ -1,21 +1,19 @@
 var express = require("express");
 const mysql = require("../mysql/index.js");
 const crypto = require('crypto');
-
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
 const { verifyToken } = require("./middlewares");
 
 var router = express.Router();
 
+/* 로그인 화면 */
 router.get('/', (req, res) => {
   res.render('login');
 });
 
-  
+/* 로그인 요청 */
 router.post("/user", async (req, res) => {
-  console.log('login post 요청됨');
 
   const id = req.body.id;
   const password = req.body.password;
@@ -46,9 +44,7 @@ router.post("/user", async (req, res) => {
               expiresIn: "3m",
               issuer: "토큰 발급자",
             }
-          );
-
-          console.log(token);    
+          );  
 
           return res.json({
             code: 200,

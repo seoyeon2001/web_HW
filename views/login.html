@@ -79,14 +79,12 @@
             .then(data => {
                 if (data.type === 'right') {
                     alert('로그인 성공!');
-
                     if (rememberMe) { // 로컬스토리지에 저장 - checkbox가 체크된 경우
                         localStorage.setItem('토큰', data.token);
                     } else {
                         // 세션스토리지에 저장 - checkbox가 체크되지 않은 경우
                         sessionStorage.setItem('토큰', data.token);
                     }
-
                     window.location.href = '/';
                 } else if (data.type === 'no_id') {
                     alert('존재하지 않는 아이디입니다.');

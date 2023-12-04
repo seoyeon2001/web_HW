@@ -7,12 +7,10 @@ router.get("/", function (req, res, next) {
   res.render("index");
 });
 
+/* 토큰 체크 */
 router.get("/checktoken", verifyToken, (req, res, next) => {
   res.json(req.decoded)
 });
 
-router.get("/hello", function (req, res, next) {
-  res.render("hello");
-});
-
 module.exports = router;
+
