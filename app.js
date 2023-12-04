@@ -10,6 +10,7 @@ var usersRouter = require("./routes/users");
 var tokenRouter = require("./routes/token");
 const loginRouter = require("./routes/login");
 const joinRouter = require("./routes/join");
+const morgan = require("morgan");
 
 var app = express();
 
@@ -39,9 +40,34 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  // TODO 배포 전 여기 수정 밑에거 주석 없애고 그 아래 코드 지우기
-  // res.send("something wrong!");
   res.send(`<h1>Error</h1><p>${err.message}</p><pre>${err.stack}</pre>`);
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("combined"));
+} else {
+  app.use(morgan("dev"));
+}
+
+app. use(express.static(path.join(__dirname, "public")));
+
+app.use(cookieParser(process.env.COOKIE_SECRET));
+
+const sessionOption = {
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+  },
+};
+if (process.env.NODE_ENV === "production") {
+  sessionOption.proxy = true;
+  // sessionOption.cookie.secure = true;
+}
+
+app.use(session(sessionOption));
+app.use(passport.initialize());
 
 module.exports = app;

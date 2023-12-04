@@ -2,18 +2,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 exports.verifyToken = (req, res, next) => {
-  // const token = req.headers.authorization; 
-  // console.log(`미들웨어에서 확인한 토큰 ` + token);
-
-  // if (!token) {
-  //   console.log("토큰이 없습니다.");
-  //   return res.redirect('/login');
-  // };
 
   // 인증 완료
   try {
     const token = req.headers.authorization.split(' ')[1];
-    // req.decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.decoded = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     return next();
   } catch (error) {

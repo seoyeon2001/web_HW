@@ -10,7 +10,6 @@ const { verifyToken } = require("./middlewares");
 var router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log("/login경로에서 login.html 요청됨");
   res.render('login');
 });
 
@@ -22,12 +21,7 @@ router.post("/user", async (req, res) => {
   const password = req.body.password;
   const rememberMe = req.body.rememberMe;
 
-  console.log("id : " + id);
-  console.log("password : " + password);
-  console.log("rememberMe : " + rememberMe);
-
   const finduser = await mysql.query("finduser", [id]);
-  console.log(finduser);
 
   // 아이디가 존재하지 않은 경우
   if(finduser.length === 0) {
@@ -74,9 +68,5 @@ router.post("/user", async (req, res) => {
     });
   };
 });
-
-// router.get("/user/token", verifyToken, (req, res) => {
-//   res.json(req.decoded);
-// });
 
 module.exports = router;
