@@ -105,6 +105,11 @@
             
             const id = document.getElementById('id').value;
 
+            if (id === '') {
+                alert('아이디를 입력해주세요.');
+                return;
+            }
+
             // 중복 확인 로직
             fetch('/join/check-userid', {
                 method: 'POST',
