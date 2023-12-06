@@ -35,12 +35,12 @@
         input:disabled {
             background-color: rgb(205, 204, 204);
         }
-
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
     <title>회원가입</title>
 </head>
+
 <body>
     <h1>회원가입</h1>
     <br>
@@ -124,7 +124,6 @@
                     checkUseridresult.innerText = data.message;
                     checkUseridresult.style.color = 'blue';
                     document.getElementById('password').disabled = false;
-
                 } else {
                     // 중복된 경우에 대한 처리
                     checkUseridresult.innerText = data.message;
@@ -139,7 +138,6 @@
                 console.error('에러가 발생했습니다.:', error);
             });
         });
-
 
         // 찐 회원가입 버튼 클릭 시
         document.querySelector('button[value="signup"]').addEventListener('click', function(event) {
@@ -167,7 +165,6 @@
             .catch(error => {
                 console.error('에러가 발생했습니다.:', error);
             });
-
         });
 
         // 비밀번호 유효성 검사
@@ -203,6 +200,5 @@
             }
         }
     </script>
-
 </body>
 </html>

@@ -1,51 +1,47 @@
 <html>
+  <head>
+    <title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
 
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+  <body>
+    <h1>웹서비스설계및실습</h1>
+    <p>환영합니다 고객님</p>
+    <script>
+      const localStorage_token = localStorage.getItem('토큰'); // 토큰을 가져온다.
+      const sessionStorage_token = sessionStorage.getItem('토큰'); // 토큰을 가져온다.
 
-<body>
-  <h1>웹서비스설계및실습</h1>
-  <p>환영합니다 고객님</p>
-  <script>
-    const localStorage_token = localStorage.getItem('토큰'); // 토큰을 가져온다.
-    const sessionStorage_token = sessionStorage.getItem('토큰'); // 토큰을 가져온다.
-
-    token = localStorage_token || sessionStorage_token; // 둘 중 하나라도 있으면 토큰으로 설정한다.
-    
-    if (!token) {
-      // 토큰이 없으면 로그인 페이지로 이동
-      window.location.href = '/login';
-    } 
-    else {
-      setInterval(() => {
-        fetch('/checktoken', {
-          method: 'GET',
-          headers: {
-            'authorization': `${token}`,
-            'Content-Type': 'application/json'
-          },
-        })
-        .then(response => { return response.json(); })
-        .then(data => {
-          if (data.message === '토큰이 만료되었습니다.') {
-            if (localStorage_token) {
-              localStorage.removeItem('토큰');
-            } else if (sessionStorage_token) {
-              sessionStorage.removeItem('토큰');
+      token = localStorage_token || sessionStorage_token; // 둘 중 하나라도 있으면 토큰으로 설정한다.
+      
+      if (!token) {
+        // 토큰이 없으면 로그인 페이지로 이동
+        window.location.href = '/login';
+      } else {
+        setInterval(() => {
+          fetch('/checktoken', {
+            method: 'GET',
+            headers: {
+              'authorization': `${token}`,
+              'Content-Type': 'application/json'
+            },
+          })
+          .then(response => { return response.json(); })
+          .then(data => {
+            if (data.message === '토큰이 만료되었습니다.') {
+              if (localStorage_token) {
+                localStorage.removeItem('토큰');
+              } else if (sessionStorage_token) {
+                sessionStorage.removeItem('토큰');
+              }
+              alert('토큰이 만료되었습니다. 로그인 페이지로 이동합니다.');
+              window.location.href = '/login';
             }
-            alert('토큰이 만료되었습니다. 로그인 페이지로 이동합니다.');
-            window.location.href = '/login';
-          }
-        })
-        .catch(error => {
-          console.error('에러가 발생했습니다.:', error);
-        });
-      }, 60000);
-    };
-
-  </script>
-</body>
-
+          })
+          .catch(error => {
+            console.error('에러가 발생했습니다.:', error);
+          });
+        }, 60000);
+      };
+    </script>
+  </body>
 </html>

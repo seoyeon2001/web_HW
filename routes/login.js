@@ -14,10 +14,8 @@ router.get('/', (req, res) => {
 
 /* 로그인 요청 */
 router.post("/user", async (req, res) => {
-
   const id = req.body.id;
   const password = req.body.password;
-  const rememberMe = req.body.rememberMe;
 
   const finduser = await mysql.query("finduser", [id]);
 
@@ -45,7 +43,6 @@ router.post("/user", async (req, res) => {
               issuer: "토큰 발급자",
             }
           );  
-
           return res.json({
             code: 200,
             message: "토큰이 발급되었습니다.",
@@ -60,7 +57,6 @@ router.post("/user", async (req, res) => {
           });
         }
       };
-
     });
   };
 });
